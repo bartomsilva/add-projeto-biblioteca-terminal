@@ -2,7 +2,7 @@ const LocalStorage = require('node-localstorage').LocalStorage;
 const localStorage = new LocalStorage('./src/database');
 
 import { Book } from "./Book";
-import { AlreadyRegistered, DataInvalid, NotFound } from "./error/errors";
+import { AlreadyRegistered, DataInvalid, NotFound } from "../error/errors";
 
 export class Author {
   private static authors: Author[] = []

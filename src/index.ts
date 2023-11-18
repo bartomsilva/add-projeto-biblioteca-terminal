@@ -1,37 +1,37 @@
 const prompt = require("prompt-sync")();
-import { Author } from "./Author";
-import { User } from "./Usesr";
-import { Book } from "./Book";
-import { Library } from "./Library";
+import { Author } from "./class/Author";
+import { User } from "./class/Usesr";
+import { Book } from "./class/Book";
+import { Library } from "./class/Library";
 import { genders } from "./database/gender.db";
 
 function menu() {
   console.clear();
   console.log(`  
-    ©----------------------------------©
+    ┌----------------------------------┐
     |   GERENCIADOR DE BIBLIOTECA      | 
     |                                  | 
     |  1) Cadastrar Autor              |
-    |  2) Editar dados do Autor        |
+    |  2) Altear dados do Autor        |
     |  3) Excluir Autor                |
-    | -------------------------------- |
+    ├----------------------------------┤
     |  4) Cadastrar Usuário            |
-    |  5) Editar dados do Usuário      |
+    |  5) Alterar dados do Usuário     |
     |  6) Excluir Usuário              |
     |  7) Alugar Livro                 |
     |  8) Devolver livro               |
-    | -------------------------------- |
+    ├----------------------------------┤
     |  9) Cadastar livro               |
     | 10) Alterar dados do livro       |
     | 11) Excluir livro                |
-    | -------------------------------- |
+    ├----------------------------------┤
     | 12) Lista de todos livros        |
     | 13) Lista de livros disponíveis  |
     | 14) Lista de Livros emprestados  |
     | 15) Lista de Livros por autor    |
     | 16) Lista de Livros por nome     |
     | 17) Lista de Livros por gênero   |
-    ©----------------------------------©
+    └----------------------------------┘
     `);
 }
 

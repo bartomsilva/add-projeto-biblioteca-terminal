@@ -2,7 +2,7 @@ const LocalStorage = require('node-localstorage').LocalStorage
 const localStorage = new LocalStorage('./src/database');
 
 import { Author } from "./Author"
-import { AlreadyRegistered, DataInvalid, NotFound } from "./error/errors"
+import { AlreadyRegistered, DataInvalid, NotFound } from "../error/errors"
 
 interface IBook {
   id: string

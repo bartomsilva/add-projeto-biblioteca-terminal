@@ -2,7 +2,7 @@ const LocalStorage = require('node-localstorage').LocalStorage
 const localStorage = new LocalStorage('./src/database');
 
 import { Library } from "./Library"
-import { AlreadyRegistered, NotFound } from "./error/errors"
+import { AlreadyRegistered, NotFound } from "../error/errors"
 
 interface IUser {
   id: string
