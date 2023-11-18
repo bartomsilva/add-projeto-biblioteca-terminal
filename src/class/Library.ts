@@ -18,7 +18,7 @@ export class Library {
     // atualizar registro de livros alugados
     try {
       if (!User.getUserById(userId)){
-        throw new NotFound(`Não encotrei o usuário com ID: ${userId}`)
+        throw new NotFound(`Não encontrei o usuário com ID: ${userId}`)
       }
       const book = Book.getBookById(bookId)
       if (!book){
