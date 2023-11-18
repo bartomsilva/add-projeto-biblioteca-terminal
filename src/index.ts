@@ -81,6 +81,15 @@ while (option != 0) {
     case 14:
       listRentedBooks()
       break
+    case 15:
+      listBooksByAuthor()
+      break
+    case 16:
+      listBooksByName()
+      break
+    case 17:
+      listBooksByGender()
+      break
     default:
       console.log("Opção inválida.");
   }
@@ -590,6 +599,7 @@ function selectGender(): Gender | undefined {
     }
   }
 }
+
 // GERA ID ALEATORIO
 function newId(length: number = 6): string {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -605,26 +615,91 @@ function newId(length: number = 6): string {
 
 function listAllBooks() {
   const books: Book[] = Book.getAllBooks()
+  console.clear()
   console.log("\nLista completa de livros")
   console.log('------------------------')
-  books.forEach((book) => detailBook(book))
+  books
+    .sort((b1: Book, b2: Book) => b1.title.localeCompare(b2.title))
+    .forEach((book) => detailBook(book))
   prompt("tecle ENTER para continuar...")
 }
 
 function listAviableBooks() {
   const books: Book[] = Library.getAviableBooks()
+  console.clear()
   console.log("\nLista de livros disponíveis")
   console.log('---------------------------')
-  books.forEach((book) => detailBook(book))
+  books
+    .sort((b1: Book, b2: Book) => b1.title.localeCompare(b2.title))
+    .forEach((book) => detailBook(book))
   prompt("tecle ENTER para continuar...")
 }
 
-
 function listRentedBooks() {
   const books: Book[] = Library.getRentedBooks()
+  console.clear()
   console.log("\nLista de livros alugados")
   console.log('------------------------')
-  books.forEach((book) => detailBook(book))
+  books
+    .sort((b1: Book, b2: Book) => b1.title.localeCompare(b2.title))
+    .forEach((book) => detailBook(book))
+  prompt("tecle ENTER para continuar...")
+}
+
+function listBooksByAuthor() {
+  const books: Book[] = Book.getAllBooks()
+  console.clear()
+  console.log("\nListar de livros por autor")
+  console.log('--------------------------')
+  const author = selectAuthor()
+  if (!author) {
+    return
+  }
+  console.clear()
+  console.log(`\nLista de livros escritos por: ${author.name}`)
+  console.log("-".repeat(65))
+  books
+    .filter(book => book.author == author.id)
+    .sort((b1: Book, b2: Book) => b1.title.localeCompare(b2.title))
+    .forEach((book) => detailBook(book))
+  prompt("tecle ENTER para continuar...")
+}
+
+function listBooksByGender() {
+  const books: Book[] = Book.getAllBooks()
+  console.clear()
+  console.log("\nListar de livros por gênero")
+  console.log('---------------------------')
+  const gender = selectGender()
+  if (!gender) {
+    return
+  }
+  console.clear()
+  console.log(`\nLista de livros do gênero: ${gender.name}`)
+  console.log("-".repeat(65))
+  books
+    .filter(book => book.gender == gender.id)
+    .sort((b1: Book, b2: Book) => b1.title.localeCompare(b2.title))
+    .forEach((book) => detailBook(book))
+  prompt("tecle ENTER para continuar...")
+}
+
+function listBooksByName() {
+  const books: Book[] = Book.getAllBooks()
+  console.clear()
+  console.log("\nListar de livros por palavra")
+  console.log('---------------------------')
+  const title = prompt("Digite a palavra a pesquisar: ")
+  if (!title) {
+    return
+  }
+  console.clear()
+  console.log(`\nLista de livros contendo a palavra: ${title}`)
+  console.log("-".repeat(65))
+  books
+    .filter(book => book.title.toLowerCase().includes(title.toLowerCase()))
+    .sort((b1: Book, b2: Book) => b1.title.localeCompare(b2.title))
+    .forEach((book) => detailBook(book))
   prompt("tecle ENTER para continuar...")
 }
 
@@ -635,6 +710,7 @@ function detailBook(book: any) {
   * Gênero: ${getGender(book.gender)?.name}
   * Total de Exemplares: ${book.quantity}
   * Exemplares Alugados: ${book.rented}
-  * Exemplares Disoniíveis: ${book.quantity - book.rented}
+  * Exemplares Disoníveis: ${book.quantity - book.rented}
   `)
 }
+
