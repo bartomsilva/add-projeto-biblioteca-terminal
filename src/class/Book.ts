@@ -2,7 +2,7 @@ const LocalStorage = require('node-localstorage').LocalStorage
 const localStorage = new LocalStorage('./src/database');
 
 import { Author } from "./Author"
-import { AlreadyRegistered, DataInvalid, NotFound } from "../error/errors"
+import { AlreadyRegistered, BadRequest, DataInvalid, NotFound } from "../error/errors"
 
 interface IBook {
   id: string
@@ -10,27 +10,26 @@ interface IBook {
   author: string
   yearPublication: number
   gender: string
+  rented: boolean
 }
 
 export class Book implements IBook {
   private static books: Book[] = []
-  private _quantity:number
-  private _rented: number
   constructor(
     private _id: string,
     private _title: string,
     private _author: string,
     private _yearPublication: number,
     private _gender: string,
-  ) { 
-    this._quantity = 1
-    this._rented = 0
+    private _rented: boolean = false
+  ) {
+    if (!Book.addBook(this)) return
   }
 
   static addBook(newBook: Book): boolean | undefined {
-    Book.getStoredBooks()
+    // Book.getStoredBooks()
     try {
-  
+
       if (!Author.getAuthorById(newBook.author)) {
         throw new NotFound(`author (${newBook.author}) não cadastrado.`)
       }
@@ -50,15 +49,12 @@ export class Book implements IBook {
     }
   }
 
-  static editBook(idEdit: string, newBook: Book ): boolean|undefined {
+  static editBook(idEdit: string, newBook: Book): boolean | undefined {
     try {
-      Book.getStoredBooks()
+      // Book.getStoredBooks()
       // const indexBook = Book.books.findIndex((book) => book.id === idEdit)
       const bookEdit = Book.getBookById(idEdit)
       if (bookEdit) {
-        if (newBook.quantity <= 0 || newBook.quantity < bookEdit.quantity) {
-          throw new DataInvalid(`quantidade ${newBook.quantity} inválida.`)
-        }
         if (!Author.getAuthorById(newBook.author)) {
           throw new NotFound(`author (${newBook.author}) não cadastrado.`)
         }
@@ -68,8 +64,6 @@ export class Book implements IBook {
         bookEdit.author = newBook.author ?? bookEdit.author
         bookEdit.gender = newBook.gender ?? bookEdit.gender
         bookEdit.yearPublication = newBook.yearPublication ?? bookEdit.yearPublication
-        bookEdit.quantity = newBook.quantity ?? bookEdit.quantity
-        bookEdit.rented = newBook.rented ?? bookEdit.rented
         Book.saveStoredBooks()
         return true
       } else {
@@ -88,11 +82,14 @@ export class Book implements IBook {
     Ao excluir um livro, também será apagado o registro 
     de aluguel.
   */
-  static deleteBook(idEdit: string): boolean|undefined {
+  static deleteBook(idEdit: string): boolean | undefined {
     try {
       Book.getStoredBooks()
       const indexBook = Book.books.findIndex((book) => book.id === idEdit)
       if (indexBook !== -1) {
+        if (Book.books[indexBook].rented) {
+          throw new BadRequest("Não é possível excluir um livro alugado")
+        }
         Book.books.splice(indexBook, 1)
         Book.saveStoredBooks()
         // deletar registro de aluguel
@@ -126,38 +123,33 @@ export class Book implements IBook {
   get author(): string { return this._author }
   get yearPublication(): number { return this._yearPublication }
   get gender(): string { return this._gender }
-  get quantity(): number { return this._quantity }
-  get rented(): number { return this._rented || 0 }
+  get rented(): boolean { return this._rented || false }
   set title(newTitle: string) { this._title = newTitle }
   set author(newAuthor: string) { this._author = newAuthor }
   set yearPublication(newYearPublication: number) { this._yearPublication = newYearPublication }
   set gender(newGender: string) { this._gender = newGender }
-  set quantity(newQuantity: number) { this._quantity = newQuantity }
-  set rented(newRented: number) { this._rented = newRented }
-
-  static setBooks(newBooks: Book[]): void {
-    Book.books = newBooks
-    Book.saveStoredBooks()
-  }
+  set rented(newRented: boolean) { this._rented = newRented }
 
   // SALVAR / LER DADOS NO LOCALSTORAGE
   private static getStoredBooks(): void {
     const storedBooks = localStorage.getItem("books")
     if (storedBooks) {
       const newsBooks = JSON.parse(storedBooks)
-      Book.books = newsBooks.map((book: Book) => {
-        const newBook = new Book(
+      Book.books=[]
+      newsBooks.forEach((book: any) => {
+        new Book(
           book._id,
           book._title,
           book._author,
           book._yearPublication,
-          book._gender
+          book._gender,
+          book._rented
         )
-        return newBook
       })
     }
   }
   private static saveStoredBooks(): void {
+    console.log
     localStorage.setItem("books", JSON.stringify(Book.books))
   }
 }

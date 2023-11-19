@@ -2,7 +2,7 @@ const LocalStorage = require('node-localstorage').LocalStorage
 const localStorage = new LocalStorage('./src/database');
 
 import { Library } from "./Library"
-import { AlreadyRegistered, NotFound } from "../error/errors"
+import { AlreadyRegistered, BadRequest, NotFound } from "../error/errors"
 
 interface IUser {
   id: string
@@ -16,7 +16,9 @@ export class User implements IUser {
   constructor(
     private _id: string,
     private _name: string,
-  ) { }
+  ) {
+    if (!User.addUser(this)) return
+  }
 
   // ALUGAR E DEVOLVER LIVRO
   rentBook(userId: string, bookId: string): void {
@@ -29,7 +31,6 @@ export class User implements IUser {
 
   // ADICIONAR USUÁRIO
   static addUser(newUser: User): boolean | undefined {
-    User.getStoredUsers()
     try {
       if (User.getUserById(newUser.id)) {
         throw new AlreadyRegistered(`Id (${newUser.id}) já cadastrado!`)
@@ -52,7 +53,6 @@ export class User implements IUser {
   // EDITAR DADOS DO USUÁRIO
   static editUser(idEdit: string, newUser: User): boolean | undefined {
     try {
-      User.getStoredUsers()
       const userEdit = User.getUserById(idEdit)
       if (userEdit) {
         userEdit.name = newUser.name ?? userEdit.name
@@ -73,9 +73,8 @@ export class User implements IUser {
   // DELETAR USUÁRIO
   static deleteUser(idDelete: string): boolean | undefined {
     try {
-      User.getStoredUsers()
       const newUsers = User.getAllUsers()
-        ?.filter(user => user.id != idDelete)
+        ?.filter(user => user._id != idDelete)
       User.users = newUsers || []
       User.saveStoredUsers()
       // apagar livros e registros de aluguel do usuário
@@ -92,7 +91,7 @@ export class User implements IUser {
   // BUSCA USUÁRIO POR ID / NAME / ALL
   static getUserById(userId: string): User | undefined {
     try {
-      User.getStoredUsers()
+      // User.getStoredUsers()
       return User.users.find(user => user.id == userId)
     } catch (error) {
       console.log(`ocorreu um erro`, error)
@@ -100,7 +99,7 @@ export class User implements IUser {
   }
   static getUserByName(userName: string): User | undefined {
     try {
-      User.getStoredUsers()
+      // User.getStoredUsers()
       return User.users.find(user => user.name == userName)
     } catch (error) {
       console.log(`ocorreu um erro`, error)
@@ -132,15 +131,16 @@ export class User implements IUser {
     const storedUsers = localStorage.getItem("users")
     if (storedUsers) {
       const newsUsers = JSON.parse(storedUsers)
-      User.users = newsUsers.map((user: User) => {
-        const newUser = new User(
+      User.users = []
+      newsUsers.forEach((user: User) => {
+        new User(
           user._id,
           user._name
         )
-        return newUser
       })
     }
   }
+
   private static saveStoredUsers(): void {
     localStorage.setItem("users", JSON.stringify(User.users))
   }

@@ -125,7 +125,6 @@ export class Author {
       console.log(`ocorreu um erro`, error)
     }
   }
-
   // SALVAR / LER DADOS NO LOCALSTORAGE
   private static getStoredAuthors(): void {
     try {

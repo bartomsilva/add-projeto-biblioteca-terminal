@@ -9,7 +9,7 @@ function menu() {
   console.clear();
   console.log(`  
     ┌----------------------------------┐
-    |   GERENCIADOR DE BIBLIOTECA      | 
+    |       BIBLIOTECA ESCOLAR         |  
     |                                  | 
     |  1) Cadastrar Autor              |
     |  2) Altear dados do Autor        |
@@ -61,7 +61,9 @@ while (option != 0) {
     case 6:
       excluirUsuario()
       break
-
+    case 7:
+      alugarLivro()
+      break
 
     case 9:
       cadastrarLivro()
@@ -250,7 +252,8 @@ function cadastrarUsuario() {
     const reload: string = prompt("digite S = salvar  outra tecla = refazer  ENTER = finalizar: ")
     switch (reload.toUpperCase()) {
       case "S":
-        if (!User.addUser(new User("U-" + newId(), name))) {
+        // if (!User.addUser(new User("U-" + newId(), name))) {
+        if (!new User("U-" + newId(), name)) {
           prompt("Algo deu errado tecle ENTER para continuar...")
         }
         break
@@ -402,7 +405,8 @@ function cadastrarLivro() {
     const reload: string = prompt("digite S = salvar  outra tecla = refazer  ENTER = finalizar: ")
     switch (reload.toUpperCase()) {
       case "S":
-        if (!Book.addBook(new Book("B-" + newId(), title, author.id, yearPublication, gender.id))) {
+        // if (!Book.addBook(new Book("B-" + newId(), title, author.id, yearPublication, gender.id))) {
+        if (!new Book("B-" + newId(), title, author.id, yearPublication, gender.id)) {
           prompt("Algo deu errado tecle ENTER para continuar...")
         }
         break
@@ -426,9 +430,9 @@ function editarLivro() {
     console.log("======================\n")
     console.log("Lista de livros\n")
 
-    const listBooks = Book.getAllBooks()
+    const listBooks: Book[] = Book.getAllBooks()
     if (listBooks) {
-      listBooks.forEach((book, i) => {
+      listBooks.forEach((book: Book, i) => {
         console.log(i, "-", book.title)
       })
       const indexBook = prompt("Digite o número do Livro desejado ou ENTER p/sair: ")
@@ -540,7 +544,6 @@ function excluirLivro() {
   prompt("tecle ENTER para continuar...")
   menu()
 }
-
 
 function selectAuthor(): Author | undefined {
   const listAuthors = Author.getAllAuthors()
@@ -708,9 +711,8 @@ function detailBook(book: any) {
   * id: ${book._id} 
   * Author: ${Author.getAuthorById(book.author)?.name}
   * Gênero: ${getGender(book.gender)?.name}
-  * Total de Exemplares: ${book.quantity}
-  * Exemplares Alugados: ${book.rented}
-  * Exemplares Disoníveis: ${book.quantity - book.rented}
+  * Status: ${book.rented ? "Alugado" : "Disponível"}
+  
   `)
 }
 

@@ -15,3 +15,9 @@ export class DataInvalid extends Error {
     super(message)
   }
 }
+
+export class BadRequest extends Error {
+  constructor(message: string = "Requisição invalida") {
+    super(message)
+  }
+}
