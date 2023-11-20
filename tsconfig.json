@@ -1,13 +1,12 @@
 {
   "compilerOptions": {
-    "target": "es6",                                   
+    "target": "ES6",                                   
     "module": "commonjs",                                 
     "rootDir": "./src",                                  
     "outDir": "./build",                                
     "removeComments": true,                            
     "esModuleInterop": true,                              
     "forceConsistentCasingInFileNames": true,            
-    "strict": true,                                     
     "noImplicitAny": true,                             
     "strictFunctionTypes": true,                    
     "skipLibCheck": true,                          

@@ -84,7 +84,7 @@ export class Book implements IBook {
   */
   static deleteBook(idEdit: string): boolean | undefined {
     try {
-      Book.getStoredBooks()
+      // Book.getStoredBooks()
       const indexBook = Book.books.findIndex((book) => book.id === idEdit)
       if (indexBook !== -1) {
         if (Book.books[indexBook].rented) {
@@ -148,8 +148,7 @@ export class Book implements IBook {
       })
     }
   }
-  private static saveStoredBooks(): void {
-    console.log
+  static saveStoredBooks(): void {
     localStorage.setItem("books", JSON.stringify(Book.books))
   }
 }

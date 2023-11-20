@@ -31,6 +31,7 @@ function menu() {
     | 15) Lista de Livros por autor    |
     | 16) Lista de Livros por nome     |
     | 17) Lista de Livros por gênero   |
+    | 18) Lista do Registro de Aluguel |
     └----------------------------------┘
     `);
 }
@@ -64,7 +65,9 @@ while (option != 0) {
     case 7:
       alugarLivro()
       break
-
+    case 8:
+      devolverLivro()
+      break
     case 9:
       cadastrarLivro()
       break
@@ -92,6 +95,9 @@ while (option != 0) {
     case 17:
       listBooksByGender()
       break
+    case 18:
+      console.log(Library.getAllRents)
+      break
     default:
       console.log("Opção inválida.");
   }
@@ -101,7 +107,8 @@ while (option != 0) {
   }
 }
 
-function cadastrarAutor() {
+
+export function cadastrarAutor() {
   while (true) {
     console.clear()
     console.log("======================")
@@ -131,7 +138,7 @@ function cadastrarAutor() {
   menu()
 }
 
-function editarAutor() {
+export function editarAutor() {
   while (true) {
     console.clear()
     console.log("======================")
@@ -144,7 +151,7 @@ function editarAutor() {
       listAuthors.forEach((author, i) => {
         console.log(i, "-", author.name)
       })
-      const indexAuthor = prompt("Digite o número do Autor desejado ou ENTER p/sair: ")
+      const indexAuthor = prompt("Digite o número do Autor ou ENTER p/sair: ")
 
       if (!indexAuthor) {
         return
@@ -194,7 +201,7 @@ function editarAutor() {
   menu()
 }
 
-function excluirAutor() {
+export function excluirAutor() {
   while (true) {
     console.clear()
     console.log("======================")
@@ -207,7 +214,7 @@ function excluirAutor() {
       listAuthors.forEach((author, i) => {
         console.log(i, "-", author.name)
       })
-      const indexAuthor = prompt("Digite o número do Autor desejado ou ENTER p/sair: ")
+      const indexAuthor = prompt("Digite o número do Autor  ou ENTER p/sair: ")
       if (!indexAuthor) {
         return
       }
@@ -241,144 +248,7 @@ function excluirAutor() {
   menu()
 }
 
-function cadastrarUsuario() {
-  while (true) {
-    console.clear()
-    console.log("======================")
-    console.log("  Cadastrar Usuário   ")
-    console.log("======================\n")
-    const name = prompt("Nome do usuário = ")
-    if (!name) return
-    const reload: string = prompt("digite S = salvar  outra tecla = refazer  ENTER = finalizar: ")
-    switch (reload.toUpperCase()) {
-      case "S":
-        // if (!User.addUser(new User("U-" + newId(), name))) {
-        if (!new User("U-" + newId(), name)) {
-          prompt("Algo deu errado tecle ENTER para continuar...")
-        }
-        break
-      case "":
-        break
-      default:
-        break
-    }
-    if (reload == "") {
-      break
-    }
-  }
-  menu()
-}
-
-function editarUsuario() {
-  while (true) {
-    console.clear()
-    console.log("======================")
-    console.log("    Editar Usuário    ")
-    console.log("======================\n")
-    console.log("Lista de Usuários\n")
-
-    const listUsers = User.getAllUsers()
-    if (listUsers) {
-      listUsers.forEach((user, i) => {
-        console.log(i, "-", user.name)
-      })
-      const indexUser = prompt("Digite o número do Usuário desejado ou ENTER p/sair: ")
-
-      if (!indexUser) {
-        return
-      }
-      if (indexUser < 0 || indexUser > listUsers.length - 1) {
-        prompt("escolha inválida tecle ENTER!")
-        continue
-      }
-
-      const editUser: User = listUsers[indexUser]
-      let newName = editUser.name
-
-      console.warn("tecle ENTER para manter o valor padrão!")
-      newName = prompt(`Nome - ${newName} : `) || newName
-
-      const reload: string = prompt("digite S = salvar  outra tecla = refazer  F = finalizar: ")
-      const newUser = new User(
-        editUser.id,
-        newName
-      )
-
-      switch (reload.toUpperCase()) {
-        case "S":
-          if (!User.editUser(editUser.id, newUser)) {
-            prompt("Algo deu errado tecle ENTER para continuar...")
-          }
-          break
-        case "R":
-          continue
-        case "F":
-          break
-        default:
-          break
-      }
-      if (reload.toUpperCase() == "F") {
-        break
-      }
-    }
-  }
-  prompt("tecle ENTER para continuar...")
-  menu()
-}
-
-function excluirUsuario() {
-  while (true) {
-    console.clear()
-    console.log("======================")
-    console.log("   Excluir Usuário    ")
-    console.log("======================\n")
-    console.log("Lista de usuários\n")
-
-    const listUsers = User.getAllUsers()
-    if (listUsers) {
-      listUsers.forEach((user, i) => {
-        console.log(i, "-", user.name)
-      })
-      const indexUser = prompt("Digite o número do Usuário desejado ou ENTER p/sair: ")
-      if (!indexUser) {
-        return
-      }
-      if (indexUser < 0 || indexUser > listUsers.length - 1) {
-        prompt("escolha inválida tecle ENTER!")
-        continue
-      }
-      const deleteUser: User = listUsers[indexUser]
-      const reload: string = prompt("digite S = confirmar  outra tecla = refazer  F = finalizar: ")
-      switch (reload.toUpperCase()) {
-        case "S":
-          if (!User.deleteUser(deleteUser.id)) {
-            prompt("Algo deu errado tecle ENTER para continuar...")
-          }
-          break
-        case "R":
-          continue
-        case "F":
-          break
-        default:
-          break
-      }
-      if (reload.toUpperCase() == "F") {
-        break
-      }
-    }
-  }
-  prompt("tecle ENTER para continuar...")
-  menu()
-}
-
-function alugarLivro() {
-
-}
-
-function devolverLivro() {
-}
-
-function cadastrarLivro() {
+export function cadastrarLivro() {
   while (true) {
     console.clear()
     console.log("======================")
@@ -422,7 +292,7 @@ function cadastrarLivro() {
   menu()
 }
 
-function editarLivro() {
+export function editarLivro() {
   while (true) {
     console.clear()
     console.log("======================")
@@ -435,7 +305,7 @@ function editarLivro() {
       listBooks.forEach((book: Book, i) => {
         console.log(i, "-", book.title)
       })
-      const indexBook = prompt("Digite o número do Livro desejado ou ENTER p/sair: ")
+      const indexBook = prompt("Digite o número do Livro  ou ENTER p/sair: ")
 
       if (!indexBook) {
         return
@@ -500,7 +370,7 @@ function editarLivro() {
   menu()
 }
 
-function excluirLivro() {
+export function excluirLivro() {
   while (true) {
     console.clear()
     console.log("======================")
@@ -513,7 +383,7 @@ function excluirLivro() {
       listBooks.forEach((book, i) => {
         console.log(i, "-", book.title)
       })
-      const indexBook = prompt("Digite o número do Livro desejado ou ENTER p/sair: ")
+      const indexBook = prompt("Digite o número do Livro  ou ENTER p/sair: ")
       if (!indexBook) {
         return
       }
@@ -545,31 +415,209 @@ function excluirLivro() {
   menu()
 }
 
-function selectAuthor(): Author | undefined {
-  const listAuthors = Author.getAllAuthors()
-  console.log("Selecione o autor:")
-  if (listAuthors) {
-    listAuthors.forEach((author, i) => {
-      console.log(i, "-", author.name)
-    })
-  } else {
-    console.log("lista de autores vázia!")
-    return
-  }
+export function cadastrarUsuario() {
   while (true) {
-    const indexAuthor = prompt("Digite o número do Autor desejado ou ENTER p/sair: ")
-    if (!indexAuthor) {
-      return
+    console.clear()
+    console.log("======================")
+    console.log("  Cadastrar Usuário   ")
+    console.log("======================\n")
+    const name = prompt("Nome do usuário = ")
+    if (!name) return
+    const reload: string = prompt("digite S = salvar  outra tecla = refazer  ENTER = finalizar: ")
+    switch (reload.toUpperCase()) {
+      case "S":
+        // if (!User.addUser(new User("U-" + newId(), name))) {
+        if (!new User("U-" + newId(), name)) {
+          prompt("Algo deu errado tecle ENTER para continuar...")
+        }
+        break
+      case "":
+        break
+      default:
+        break
     }
-    if (indexAuthor < 0 || indexAuthor > listAuthors.length - 1) {
-      prompt("escolha inválida tecle ENTER!")
-    } else {
-      return listAuthors[indexAuthor]
+    if (reload == "") {
+      break
     }
   }
+  menu()
 }
 
-type Gender = {
+export function editarUsuario() {
+  while (true) {
+    console.clear()
+    console.log("======================")
+    console.log("    Editar Usuário    ")
+    console.log("======================\n")
+    console.log("Lista de Usuários\n")
+
+    const listUsers = User.getAllUsers()
+    if (listUsers) {
+      listUsers.forEach((user, i) => {
+        console.log(i, "-", user.name)
+      })
+      const indexUser = prompt("Digite o número do Usuário  ou ENTER p/sair: ")
+
+      if (!indexUser) {
+        return
+      }
+      if (indexUser < 0 || indexUser > listUsers.length - 1) {
+        prompt("escolha inválida tecle ENTER!")
+        continue
+      }
+
+      const editUser: User = listUsers[indexUser]
+      let newName = editUser.name
+
+      console.warn("tecle ENTER para manter o valor padrão!")
+      newName = prompt(`Nome - ${newName} : `) || newName
+
+      const reload: string = prompt("digite S = salvar  outra tecla = refazer  F = finalizar: ")
+      const newUser = new User(
+        editUser.id,
+        newName
+      )
+
+      switch (reload.toUpperCase()) {
+        case "S":
+          if (!User.editUser(editUser.id, newUser)) {
+            prompt("Algo deu errado tecle ENTER para continuar...")
+          }
+          break
+        case "R":
+          continue
+        case "F":
+          break
+        default:
+          break
+      }
+      if (reload.toUpperCase() == "F") {
+        break
+      }
+    }
+  }
+  prompt("tecle ENTER para continuar...")
+  menu()
+}
+
+export function excluirUsuario() {
+  while (true) {
+    console.clear()
+    console.log("======================")
+    console.log("   Excluir Usuário    ")
+    console.log("======================\n")
+    console.log("Lista de usuários\n")
+
+    const listUsers = User.getAllUsers()
+    if (listUsers) {
+      listUsers.forEach((user, i) => {
+        console.log(i, "-", user.name)
+      })
+      const indexUser = prompt("Digite o número do Usuário  ou ENTER p/sair: ")
+      if (!indexUser) {
+        return
+      }
+      if (indexUser < 0 || indexUser > listUsers.length - 1) {
+        prompt("escolha inválida tecle ENTER!")
+        continue
+      }
+      const deleteUser: User = listUsers[indexUser]
+      const reload: string = prompt("digite S = confirmar  outra tecla = refazer  F = finalizar: ")
+      switch (reload.toUpperCase()) {
+        case "S":
+          if (!User.deleteUser(deleteUser.id)) {
+            prompt("Algo deu errado tecle ENTER para continuar...")
+          }
+          break
+        case "R":
+          continue
+        case "F":
+          break
+        default:
+          break
+      }
+      if (reload.toUpperCase() == "F") {
+        break
+      }
+    }
+  }
+  prompt("tecle ENTER para continuar...")
+  menu()
+}
+
+export function alugarLivro() {
+  while (true) {
+    console.clear()
+    console.log("======================")
+    console.log("  Aluguel de Livros   ")
+    console.log("======================\n")
+    const user = selectUser()
+    if (!user) return
+    const listRentBooks = selectBook()
+    const reload: string = prompt("digite S = salvar  outra tecla = refazer  ENTER = finalizar: ")
+    switch (reload.toUpperCase()) {
+      case "S":
+        listRentBooks?.forEach((book:any) => {
+          Library.rentBook(user.id, book.id)
+        }
+        )
+        console.log("\nResumo do Aluguel")
+        console.log("-----------------")
+        console.log('Usuário:', user.name)
+        console.log('Livros alugados:')
+        listRentBooks?.forEach((book:any) =>
+          console.log(book.title))
+        console.log("Total de livro: ", listRentBooks?.length)
+        prompt("Obrigado e boa leitura, volte Sempre!")
+        break
+      case "":
+        break
+      default:
+        break
+    }
+    if (reload == "") {
+      break
+    }
+  }
+  menu()
+}
+
+export function devolverLivro() {
+  console.clear()
+  console.log("======================")
+  console.log("    Devolver Livros   ")
+  console.log("======================\n")
+  const user = selectUser()
+  if (!user) return
+  const listRentBooks = Library.getAllRents(user.id)
+  if (!listRentBooks) {
+    prompt("não a registro de alugueis para este usuaário, tecle ENTER")
+    return
+  }
+  listRentBooks.forEach((book, i) => {
+    const result = Book.getBookById(book.bookId)
+    console.log(i, "-", result?.title)
+  })
+
+  const reload: string = prompt("digite S = salvar  outra tecla = refazer  ENTER = finalizar: ")
+  switch (reload.toUpperCase()) {
+    case "S":
+      break
+    case "":
+      break
+    default:
+      break
+  }
+
+  if (reload == "") {
+    return
+  }
+
+  menu()
+}
+
+
+export type Gender = {
   id: string,
   name: string
 }
@@ -591,7 +639,7 @@ function selectGender(): Gender | undefined {
     return
   }
   while (true) {
-    const indexGender = prompt("Digite o número do Gênero desejado ou ENTER p/sair: ")
+    const indexGender = prompt("Digite o número do Gênero  ou ENTER p/sair: ")
     if (!indexGender) {
       return
     }
@@ -599,6 +647,89 @@ function selectGender(): Gender | undefined {
       prompt("escolha inválida tecle ENTER!")
     } else {
       return listGenders[indexGender]
+    }
+  }
+}
+
+function selectAuthor(): Author | undefined {
+  const listAuthors = Author.getAllAuthors()
+  console.log("Selecione o autor:")
+  if (listAuthors) {
+    listAuthors.forEach((author, i) => {
+      console.log(i, "-", author.name)
+    })
+  } else {
+    console.log("lista de autores vázia!")
+    return
+  }
+  while (true) {
+    const indexAuthor = prompt("Digite o número do Autor  ou ENTER p/sair: ")
+    if (!indexAuthor) {
+      return
+    }
+    if (indexAuthor < 0 || indexAuthor > listAuthors.length - 1) {
+      prompt("escolha inválida tecle ENTER!")
+    } else {
+      return listAuthors[indexAuthor]
+    }
+  }
+}
+
+function selectUser(): User | undefined {
+  const listUsers = User.getAllUsers()
+  console.log("Selecione o usuário:")
+  if (listUsers) {
+    listUsers.forEach((user, i) => {
+      console.log(i, "-", user.name)
+    })
+  } else {
+    console.log("lista de usuários vázia!")
+    return
+  }
+  while (true) {
+    const indexUser = prompt("Digite o número do Usuário  ou ENTER p/sair: ")
+    if (!indexUser) {
+      return
+    }
+    if (indexUser < 0 || indexUser > listUsers.length - 1) {
+      prompt("escolha inválida tecle ENTER!")
+    } else {
+      return listUsers[indexUser]
+    }
+  }
+}
+
+function selectBook(): Book[] | undefined {
+  const listBooks = Library.getAviableBooks()
+  const booksRent: Book[] = []
+
+  console.log("Selecione o livro:")
+  if (listBooks) {
+    listBooks.forEach((book, i) => {
+      console.log(i, "-", book.title)
+    })
+  } else {
+    console.log("lista de livros vázia!")
+    return
+  }
+  while (true) {
+    const indexBook = prompt("Digite o número do Livro ou ENTER p/sair: ")
+    if (!indexBook) {
+      if (booksRent.length) {
+        return booksRent
+      }
+      return
+    }
+    if (indexBook < 0 || indexBook > listBooks.length - 1) {
+      prompt("escolha inválida tecle ENTER!")
+    } else {
+      const selectBook = listBooks[indexBook]
+      if (booksRent.some(book => book == selectBook)) {
+        console.log(`este livro ${selectBook.title} já está na sua lista`)
+      } else {
+        console.log(`*** Livro adicionado alista: ${selectBook.title}`)
+        booksRent.push(selectBook)
+      }
     }
   }
 }
@@ -615,6 +746,7 @@ function newId(length: number = 6): string {
 
   return result;
 }
+
 
 function listAllBooks() {
   const books: Book[] = Book.getAllBooks()
@@ -633,8 +765,8 @@ function listAviableBooks() {
   console.log("\nLista de livros disponíveis")
   console.log('---------------------------')
   books
-    .sort((b1: Book, b2: Book) => b1.title.localeCompare(b2.title))
-    .forEach((book) => detailBook(book))
+  .sort((b1: Book, b2: Book) => b1.title.localeCompare(b2.title))
+  .forEach((book) => detailBook(book))
   prompt("tecle ENTER para continuar...")
 }
 
@@ -662,14 +794,14 @@ function listBooksByAuthor() {
   console.log(`\nLista de livros escritos por: ${author.name}`)
   console.log("-".repeat(65))
   books
-    .filter(book => book.author == author.id)
-    .sort((b1: Book, b2: Book) => b1.title.localeCompare(b2.title))
+  .filter(book => book.author == author.id)
+  .sort((b1: Book, b2: Book) => b1.title.localeCompare(b2.title))
     .forEach((book) => detailBook(book))
-  prompt("tecle ENTER para continuar...")
-}
-
-function listBooksByGender() {
-  const books: Book[] = Book.getAllBooks()
+    prompt("tecle ENTER para continuar...")
+  }
+  
+  function listBooksByGender() {
+    const books: Book[] = Book.getAllBooks()
   console.clear()
   console.log("\nListar de livros por gênero")
   console.log('---------------------------')
@@ -716,3 +848,5 @@ function detailBook(book: any) {
   `)
 }
 
+
+module.exports ={ getGender, selectGender, selectAuthor, selectUser,selectBook,newId, menu }

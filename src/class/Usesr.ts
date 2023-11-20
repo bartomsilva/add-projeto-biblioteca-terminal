@@ -22,7 +22,7 @@ export class User implements IUser {
 
   // ALUGAR E DEVOLVER LIVRO
   rentBook(userId: string, bookId: string): void {
-    Library.rentBook(userId, bookId)
+    Library.rentBook(this.id, bookId)
   }
 
   returnBook(userId: string, bookId: string): void {
@@ -73,10 +73,11 @@ export class User implements IUser {
   // DELETAR USUÁRIO
   static deleteUser(idDelete: string): boolean | undefined {
     try {
-      const newUsers = User.getAllUsers()
+      const newUsers = User.users
         ?.filter(user => user._id != idDelete)
       User.users = newUsers || []
       User.saveStoredUsers()
+      // todo
       // apagar livros e registros de aluguel do usuário
       return true
     } catch (error) {
