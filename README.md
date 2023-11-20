@@ -1,5 +1,18 @@
 # add-projeto-biblioteca-terminal
+## Todas funcionalidades básicas solicitadas foram implementadas:
+- todas classes foram construídas dentro da pasta class
+  
+  ![image](https://github.com/bartomsilva/add-projeto-biblioteca-terminal/assets/106079184/988f67ff-82cd-44ef-8cf2-3c78c745a7d2)
+  
+- o index.ts faz apenas uso das funcionalidades implementadas, não fiz uma modularização, devido ao curto espaço de tempo.
 
+![image](https://github.com/bartomsilva/add-projeto-biblioteca-terminal/assets/106079184/e098ea04-5b0b-4a42-8cc0-ef8bcb46ac42)
+
+- para poder salvar os dados utilizei uma lib chamada localstorage (limita recursos de memória)
+- gostei deste projetinho, breve vou transformar em um app react e mais refinado.
+  
+
+## DESCRIÇÃO ORIGINAL
 Sistema de Gerenciamento de Biblioteca
 Considere o desenvolvimento de um sistema de gerenciamento de biblioteca em TypeScript. Este 
 sistema deve permitir a gestão de livros, autores e usuários. Os requisitos básicos são:
