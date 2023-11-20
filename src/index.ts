@@ -19,7 +19,7 @@ function menu() {
     |  5) Alterar dados do Usuário     |
     |  6) Excluir Usuário              |
     |  7) Alugar Livro                 |
-    |  8) Devolver livro               |
+    |  8) Devolver livro (TODO)        |
     ├----------------------------------┤
     |  9) Cadastar livro               |
     | 10) Alterar dados do livro       |
@@ -31,7 +31,7 @@ function menu() {
     | 15) Lista de Livros por autor    |
     | 16) Lista de Livros por nome     |
     | 17) Lista de Livros por gênero   |
-    | 18) Lista do Registro de Aluguel |
+    | 18) Registro de Aluguel(TODO)    |
     └----------------------------------┘
     `);
 }
