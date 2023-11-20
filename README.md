@@ -1,4 +1,4 @@
-# add-projeto-biblioteca-terminal
+# ada-projeto-biblioteca-terminal
 ## Todas funcionalidades básicas solicitadas foram implementadas:
 - todas classes foram construídas dentro da pasta class
   
