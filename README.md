@@ -6,7 +6,7 @@
   
 - o index.ts faz apenas uso das funcionalidades implementadas, não fiz uma modularização, devido ao curto espaço de tempo.
 
-![image](https://github.com/bartomsilva/add-projeto-biblioteca-terminal/assets/106079184/e098ea04-5b0b-4a42-8cc0-ef8bcb46ac42)
+![image](https://github.com/bartomsilva/add-projeto-biblioteca-terminal/assets/106079184/e1fb2364-c794-4c1a-b6b7-ceadf8b8acd3)
 
 - para poder salvar os dados utilizei uma lib chamada localstorage (limita recursos de memória)
 - gostei deste projetinho, breve vou transformar em um app react e mais refinado.
